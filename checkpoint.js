@@ -43,7 +43,15 @@ const {
 // allí la recursión
 
 var objContains = function(obj, prop, value){
- 
+  for (i in obj) {
+        if (i === prop && obj[i] === value) {
+        result = true;
+            break;
+      } else
+        result = false;
+      if (typeof obj[i] === "object") objContains(obj[i], prop, value);
+    }
+    return result;
 }
 
 
@@ -58,7 +66,15 @@ var objContains = function(obj, prop, value){
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
 var countArray = function(array){
-  
+  let sum = 0;
+  array.forEach((item) => {
+    if(Array.isArray(item)) {
+      sum += countArray(item);
+    } else {
+      sum += item;
+    }
+  })
+return sum;
 }
 
 // ---------------------
@@ -78,7 +94,14 @@ var countArray = function(array){
 //    lista.size(); --> 3
 
 LinkedList.prototype.size = function(){
- 
+  let counter = 0;
+  let node  = this.head;
+
+  while (node) {
+    counter++;
+    node = node.next;
+  }
+  return counter;
 }
 
 
@@ -99,8 +122,36 @@ LinkedList.prototype.size = function(){
 //    sin antes tener cargada la posición 0 y 1.
 
 LinkedList.prototype.addInPos = function(pos, value){
-  
+  var node = new Node(value);
+  var curr = this.head;
+  var i = 0;
+
+  if(this.head === null) {
+    return false;
+  }
+
+  while(i < pos - 1) {
+    curr = curr.next;
+    i++;
+  }
+
+  node.next = curr.next;
+  curr.next = node;
+  return true;
 }
+
+/*LinkedList.prototype.getAt = function(index){
+    let counter = 0;
+    let node = this.head;
+    while (node) {
+        if (counter === index) {
+           return node;
+        }
+        counter++;
+        node = node.next;
+    }
+    return null;
+}*/
 
 // EJERCICIO 5
 // Implementar el método reverse dentro del prototype de LinkedList que invierta el orden de la lista
@@ -110,7 +161,7 @@ LinkedList.prototype.addInPos = function(pos, value){
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
- 
+  
 }
 
 
@@ -164,7 +215,7 @@ var cardGame = function(mazoUserA, mazoUserB){
 //       5
 
 var generateBST = function(array){
- 
+
 }
 
 
@@ -186,7 +237,7 @@ var generateBST = function(array){
 
 var binarySearch = function (array, target) {
 
-  
+
 }
 
 // EJERCICIO 9
@@ -199,7 +250,7 @@ var binarySearch = function (array, target) {
 
 
 var selectionSort = function(array) {
-  
+
 }
 
 // ----- Closures -----
@@ -217,7 +268,7 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
- 
+
 }
 
 // -------------------
@@ -233,7 +284,7 @@ function closureSum(numFijo) {
 //    console.log(anagrams); // [ 'abc', 'acb', 'bac', 'bca', 'cab', 'cba' ]
 
 var allAnagrams = function(string, array, index) {
- 
+
 };
 
 module.exports = {
