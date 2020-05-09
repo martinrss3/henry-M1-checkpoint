@@ -46,9 +46,10 @@ var objContains = function(obj, prop, value){
   for (i in obj) {
         if (i === prop && obj[i] === value) {
         result = true;
-            break;
-      } else
+        break;
+      } else {
         result = false;
+      }
       if (typeof obj[i] === "object") objContains(obj[i], prop, value);
     }
     return result;
@@ -66,7 +67,7 @@ var objContains = function(obj, prop, value){
 // [Para más información del método: https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/isArray]
 
 var countArray = function(array){
-  let sum = 0;
+  var sum = 0;
   array.forEach((item) => {
     if(Array.isArray(item)) {
       sum += countArray(item);
@@ -95,7 +96,7 @@ return sum;
 
 LinkedList.prototype.size = function(){
   let counter = 0;
-  let node  = this.head;
+  let node = this.head;
 
   while (node) {
     counter++;
@@ -140,18 +141,6 @@ LinkedList.prototype.addInPos = function(pos, value){
   return true;
 }
 
-/*LinkedList.prototype.getAt = function(index){
-    let counter = 0;
-    let node = this.head;
-    while (node) {
-        if (counter === index) {
-           return node;
-        }
-        counter++;
-        node = node.next;
-    }
-    return null;
-}*/
 
 // EJERCICIO 5
 // Implementar el método reverse dentro del prototype de LinkedList que invierta el orden de la lista
@@ -161,7 +150,14 @@ LinkedList.prototype.addInPos = function(pos, value){
 //    Lista nueva luego de aplicar el reverse: Head --> 13 --> 10 --> 4 --> 1 --> null
 
 LinkedList.prototype.reverse = function(){
-  
+  var rev = new LinkedList();
+  var value = this.remove();
+
+  while (value !== undefined) {
+    rev.add(value);
+    value = this.remove();
+  }
+  return rev;
 }
 
 
@@ -191,8 +187,32 @@ LinkedList.prototype.reverse = function(){
 //    - mazoUserA = [2,10,11]
 //    - mazoUserB = [6,9,10,3,6,4]
 
-var cardGame = function(mazoUserA, mazoUserB){
+var cardGame = function(mazoUserA, mazoUserB) {
+  while(mazoUserA.size() !== 0 || mazoUserB.size() !== 0) {
+    if(mazoUserA.size() === 0) {
+      return "B wins!";
+    }
+    if(mazoUserB.size() === 0) {
+      return "A wins!";
+    }
 
+  var player1 = mazoUserA.dequeue();
+  var player2 = mazoUserB.dequeue();
+
+    if(player1 === player2) {
+
+    }
+    if(player1 > player2){
+        mazoUserA.enqueue(player1);
+        mazoUserA.enqueue(player1);
+    }
+    if(player1 < player2){
+        mazoUserB.enqueue(player2);
+        mazoUserB.enqueue(player2);
+    }
+  }
+
+if(mazoUserA.size() === 0 && mazoUserB.size() === 0 ) return "Game tie!"
 }
 
 // ---------------
@@ -215,7 +235,11 @@ var cardGame = function(mazoUserA, mazoUserB){
 //       5
 
 var generateBST = function(array){
+  var result = new BinarySearchTree(array[0]);
+    array.shift();
+      array.forEach(elemento => result.insert(elemento));
 
+  return result;
 }
 
 
@@ -236,8 +260,22 @@ var generateBST = function(array){
 
 
 var binarySearch = function (array, target) {
+  var higher = array.length - 1;
+  var lower = 0;
+  var mid = 0;
 
+  while (lower <= higher) {
+    mid = Math.floor((higher + lower) / 2);
 
+    if (array[mid] === target) {
+      return mid;
+    } else if (target > array[mid]) {
+      lower = mid + 1;
+    } else {
+      higher = mid - 1;
+    }
+  }
+  return - 1;
 }
 
 // EJERCICIO 9
@@ -250,7 +288,22 @@ var binarySearch = function (array, target) {
 
 
 var selectionSort = function(array) {
+  var min;
+  for (var i = 0; i < array.length; i++) {
+    min = i;
+    for (var j = i + 1; j < array.length; j++) {
+      if (array[j] < array[min]) {
+        min = j;
+      }
+    }
 
+    if(min !== i){
+      var aux = array[min];
+      array[min] = array[i];
+      array[i] = aux;
+    }
+  }
+  return array;
 }
 
 // ----- Closures -----
@@ -268,7 +321,9 @@ var selectionSort = function(array) {
 //    sumaDiez(11); --> Devolverá 21 (Ya que 11 + 10 = 21)
 
 function closureSum(numFijo) {
-
+  return function(num) {
+    return num + numFijo;
+  }
 }
 
 // -------------------
