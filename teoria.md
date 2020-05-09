@@ -20,4 +20,4 @@
 
 * Big O notation: Es una métrica que sirve para describir la eficiencia de los algoritmos.
 
-* Inmediatly Invoked Function Expression (IIFE): son funciones que se ejecutan tan pronto como se definen. Pueden ser utilizadas para evitar el hoisting dentro de bloques.
+* Inmediatly Invoked Function Expression (IIFE): son funciones que se ejecutan tan pronto como se definen. Pueden ser utilizadas para evitar el hoisting dentro de bloques.-
